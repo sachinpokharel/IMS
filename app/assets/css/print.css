@@ -1,0 +1,56 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  .print-only {
+    display: block !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+  /* Remove all borders from tables and cells for print */
+  table, th, td {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  /* Hide sidebar and header when printing */
+  aside,
+  .AppSidebar,
+  header,
+  .AppHeader,
+  nav,
+  .app-header,
+  .app-sidebar {
+    display: none !important;
+  }
+  /* Hide Nuxt layout header if present */
+  .flex.h-screen > .AppSidebar,
+  .flex.h-screen > aside {
+    display: none !important;
+  }
+  /* Hide top navigation bar if present */
+  .flex.flex-1.flex-col > .AppHeader,
+  .flex.flex-1.flex-col > header {
+    display: none !important;
+  }
+  /* Make main content full width */
+  main,
+  .main-content {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body {
+    background: #fff !important;
+  }
+}
+
