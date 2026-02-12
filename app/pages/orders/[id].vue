@@ -491,9 +491,8 @@ async function handleShipmentCreated(shipmentId: string, trackingId: string) {
     </div>
 
     <!-- Edit Modal -->
-    <Modal
-      v-if="showEditModal"
-      @close="showEditModal = false"
+    <UiModal
+      v-model:open="showEditModal"
       title="Edit Order"
       size="lg"
     >
@@ -597,7 +596,7 @@ async function handleShipmentCreated(shipmentId: string, trackingId: string) {
           </button>
         </div>
       </form>
-    </Modal>
+    </UiModal>
   </div>
 
   <div v-else-if="loading" class="flex items-center justify-center h-64">

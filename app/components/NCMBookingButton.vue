@@ -94,9 +94,8 @@ function getCODAmount() {
       Book NCM Delivery
     </button>
 
-    <Modal
-      v-if="showModal"
-      @close="showModal = false"
+    <UiModal
+      v-model:open="showModal"
       title="Book NCM Delivery"
       size="md"
     >
@@ -181,6 +180,6 @@ function getCODAmount() {
           </button>
         </div>
       </div>
-    </Modal>
+    </UiModal>
   </div>
 </template>

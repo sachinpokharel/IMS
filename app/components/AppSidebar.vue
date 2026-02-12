@@ -98,7 +98,6 @@ async function handleLogout() {
         <Icon name="lucide:boxes" class="h-5 w-5 lg:h-5 lg:w-5 md:h-6 md:w-6 sm:h-6 sm:w-6" />
       </div>
       <div :class="['hidden flex-col transition-all duration-300', !isCollapsed && 'lg:flex']">
-        >
         <span
           class="text-[10px] font-medium text-gray-500 uppercase tracking-wider"
           >Inventory</span

@@ -718,9 +718,8 @@ async function handleSubmit() {
     </form>
 
     <!-- New Customer Modal -->
-    <Modal
-      v-if="showNewCustomerModal"
-      @close="showNewCustomerModal = false"
+    <UiModal
+      v-model:open="showNewCustomerModal"
       title="Add New Customer"
       size="lg"
     >
@@ -730,14 +729,14 @@ async function handleSubmit() {
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Name <span class="text-red-500">*</span>
             </label>
-            <Input v-model="newCustomerForm.name" required />
+            <UiInput v-model="newCustomerForm.name" required />
           </div>
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
               Phone <span class="text-red-500">*</span>
             </label>
-            <Input
+            <UiInput
               v-model="newCustomerForm.phone"
               type="tel"
               required
@@ -748,7 +747,7 @@ async function handleSubmit() {
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Secondary Phone</label>
-            <Input
+            <UiInput
               v-model="newCustomerForm.secondaryPhone"
               type="tel"
               :error="secondaryPhoneError"
@@ -758,7 +757,7 @@ async function handleSubmit() {
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Street</label>
-            <Input v-model="newCustomerForm.street" />
+            <UiInput v-model="newCustomerForm.street" />
           </div>
 
           <div>
@@ -776,7 +775,7 @@ async function handleSubmit() {
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Charge</label>
-            <Input v-model.number="newCustomerForm.deliveryCharge" type="number" step="0.01" />
+            <UiInput v-model.number="newCustomerForm.deliveryCharge" type="number" step="0.01" />
           </div>
 
           <div class="md:col-span-2">
@@ -806,7 +805,7 @@ async function handleSubmit() {
           </button>
         </div>
       </form>
-    </Modal>
+    </UiModal>
   </div>
 
   <div v-else class="flex items-center justify-center h-64">

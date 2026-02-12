@@ -10,29 +10,29 @@
 
     <!-- Stats -->
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      <StatCard
+      <UiStatCard
         title="Total Activities"
         :value="stats.totalActivities"
         icon="lucide:activity"
-        color="blue"
+        icon-color="primary"
       />
-      <StatCard
+      <UiStatCard
         title="Created"
         :value="getStatCount('created')"
         icon="lucide:plus-circle"
-        color="green"
+        icon-color="success"
       />
-      <StatCard
+      <UiStatCard
         title="Updated"
         :value="getStatCount('updated')"
         icon="lucide:edit"
-        color="blue"
+        icon-color="primary"
       />
-      <StatCard
+      <UiStatCard
         title="Deleted"
         :value="getStatCount('deleted')"
         icon="lucide:trash-2"
-        color="red"
+        icon-color="destructive"
       />
     </div>
 
@@ -131,11 +131,14 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <tr v-if="logs.length === 0">
               <td colspan="6" class="px-6 py-12 text-center">
-                <EmptyState
-                  icon="lucide:activity"
+                <UiEmptyState
                   title="No activity logs found"
                   description="Activity will appear here when users perform actions"
-                />
+                >
+                  <template #icon>
+                    <Icon name="lucide:activity" class="h-6 w-6 text-gray-400" />
+                  </template>
+                </UiEmptyState>
               </td>
             </tr>
             <tr v-for="log in logs" :key="log.id" class="hover:bg-gray-50">
