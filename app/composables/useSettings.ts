@@ -83,7 +83,7 @@ function transformToApi(settings: Settings): Partial<ApiSettings> {
 export const useSettings = () => {
   const { data: rawSettings, refresh } = useAsyncData<ApiSettings>(
     'settings',
-    () => $fetch('/api/settings')
+    () => $fetch<ApiSettings>('/api/settings')
   );
 
   // Transform raw API data to frontend shape

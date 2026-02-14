@@ -91,7 +91,7 @@
       <div class="grid grid-cols-2 gap-4">
         <div>
           <!-- Completed Payments (excluding COD) -->
-          <div v-if="invoice.payments.filter(p => p.method !== 'cod').length > 0" class="mb-4">
+          <div v-if="completedPayments.length > 0" class="mb-4">
             <div class="text-xs font-semibold text-gray-700 mb-2">Payments Received</div>
             <table class="w-full text-xs">
               <thead>
@@ -103,7 +103,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(payment, index) in invoice.payments.filter(p => p.method !== 'cod')" :key="payment.id" style="border-bottom:1px solid #e5e7eb;">
+                <tr v-for="(payment, index) in completedPayments" :key="payment.id" style="border-bottom:1px solid #e5e7eb;">
                   <td class="p-2 text-left">{{ index + 1 }}</td>
                   <td class="p-2 text-left">{{ payment.method }}</td>
                   <td class="p-2 text-right font-semibold">{{ formatCurrency(payment.amount) }}</td>
@@ -114,7 +114,7 @@
           </div>
           
           <!-- COD Payments (Due on Delivery) -->
-          <div v-if="invoice.payments.filter(p => p.method === 'cod').length > 0" class="mb-4">
+          <div v-if="codPayments.length > 0" class="mb-4">
             <div class="text-xs font-semibold text-orange-700 mb-2">Due on Delivery (COD)</div>
             <table class="w-full text-xs">
               <thead>
@@ -124,7 +124,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="payment in invoice.payments.filter(p => p.method === 'cod')" :key="payment.id" style="border-bottom:1px solid #fed7aa;">
+                <tr v-for="payment in codPayments" :key="payment.id" style="border-bottom:1px solid #fed7aa;">
                   <td class="p-2 text-left">Cash on Delivery</td>
                   <td class="p-2 text-right font-bold text-orange-700">{{ formatCurrency(payment.amount) }}</td>
                 </tr>
@@ -136,30 +136,30 @@
           <div class="w-48 space-y-2">
             <div class="flex justify-between text-sm">
               <span class="text-gray-600">Total Paid:</span>
-              <span class="font-semibold text-green-700">{{ formatCurrency(invoice.payments.filter(p => p.method !== 'cod').reduce((sum, p) => sum + p.amount, 0)) }}</span>
+              <span class="font-semibold text-green-700">{{ formatCurrency(totalPaid) }}</span>
             </div>
-            <div v-if="invoice.payments.filter(p => p.method === 'cod').length > 0" class="flex justify-between text-sm">
+            <div v-if="codPayments.length > 0" class="flex justify-between text-sm">
               <span class="text-orange-600">COD Due:</span>
-              <span class="font-semibold text-orange-700">{{ formatCurrency(invoice.payments.filter(p => p.method === 'cod').reduce((sum, p) => sum + p.amount, 0)) }}</span>
+              <span class="font-semibold text-orange-700">{{ formatCurrency(totalCod) }}</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-600">Remaining:</span>
-              <span :class="invoice.totalAmount - invoice.payments.filter(p => p.method !== 'cod').reduce((sum, p) => sum + p.amount, 0) > 0 ? 'font-semibold text-red-600' : 'font-semibold text-green-700'">
-                {{ formatCurrency(Math.max(0, invoice.totalAmount - invoice.payments.filter(p => p.method !== 'cod').reduce((sum, p) => sum + p.amount, 0))) }}
+              <span :class="invoice.totalAmount - totalPaid > 0 ? 'font-semibold text-red-600' : 'font-semibold text-green-700'">
+                {{ formatCurrency(Math.max(0, invoice.totalAmount - totalPaid)) }}
               </span>
             </div>
-            <div v-if="invoice.totalAmount - invoice.payments.filter(p => p.method !== 'cod').reduce((sum, p) => sum + p.amount, 0) === 0" class="pt-2 border-t">
+            <div v-if="invoice.totalAmount - totalPaid === 0" class="pt-2 border-t">
               <div class="text-green-700 font-bold text-sm flex items-center gap-1">
                 <span>✓</span>
                 <span>Fully Paid</span>
               </div>
             </div>
-            <div v-else-if="invoice.payments.filter(p => p.method !== 'cod').length > 0" class="pt-2 border-t">
+            <div v-else-if="completedPayments.length > 0" class="pt-2 border-t">
               <div class="text-orange-700 font-semibold text-xs">
                 Partial Payment Received
               </div>
             </div>
-            <div v-else-if="invoice.payments.filter(p => p.method === 'cod').length > 0" class="pt-2 border-t">
+            <div v-else-if="codPayments.length > 0" class="pt-2 border-t">
               <div class="text-orange-700 font-semibold text-xs">
                 💰 Payment Due on Delivery
               </div>
@@ -179,8 +179,44 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-const props = defineProps<{ invoice: any, customer: any, formatCurrency: Function, formatDate: Function }>();
+import { computed } from 'vue';
+interface Payment {
+  id: string;
+  method: string;
+  amount: number;
+  paidDate?: string | number | Date;
+}
+
+interface Invoice {
+  invoiceNumber: string;
+  issuedDate: string | number | Date;
+  dueDate: string | number | Date;
+  subtotal: number;
+  taxAmount: number;
+  taxRate?: string;
+  discountAmount?: number;
+  deliveryCharge?: number;
+  totalAmount: number;
+  items: any[];
+  payments?: Payment[];
+  companyName?: string;
+  companyAddress?: string;
+  companyPhone?: string;
+  companyLogo?: string;
+  currency?: string;
+}
+
+const props = defineProps<{ 
+  invoice: Invoice, 
+  customer: any, 
+  formatCurrency: (val: number) => string, 
+  formatDate: (val: any) => string 
+}>();
+
+const completedPayments = computed(() => (props.invoice.payments || []).filter(p => p.method !== 'cod'));
+const codPayments = computed(() => (props.invoice.payments || []).filter(p => p.method === 'cod'));
+const totalPaid = computed(() => completedPayments.value.reduce((sum, p) => sum + p.amount, 0));
+const totalCod = computed(() => codPayments.value.reduce((sum, p) => sum + p.amount, 0));
 </script>
 
 <style scoped>

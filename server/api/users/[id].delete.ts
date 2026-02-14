@@ -3,19 +3,13 @@ import { eq } from 'drizzle-orm';
 
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
-
-  if (!session.user) {
-    throw createError({
-      statusCode: 401,
-      message: 'Not authenticated',
-    });
-  }
+  const user = session.user as any;
 
   // Only admins can delete users
-  if (session.user.role !== 'admin') {
+  if (!user || user.role !== 'admin') {
     throw createError({
       statusCode: 403,
-      message: 'Only administrators can delete users',
+      message: 'Only administrators can manage users',
     });
   }
 
@@ -30,7 +24,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Prevent deleting yourself
-  if (id === session.user.id) {
+  if (id === user.id) {
     throw createError({
       statusCode: 403,
       message: 'You cannot delete your own account',

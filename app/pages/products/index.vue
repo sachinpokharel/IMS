@@ -302,8 +302,9 @@ async function deleteProduct(product: Product) {
     await $fetch(`/api/products/${product.id}`, { method: 'DELETE' });
     toast.success('Deleted', `"${product.name}" removed.`);
     refresh();
-  } catch (error) {
-    toast.error('Error', 'Failed to delete product.');
+  } catch (error: any) {
+    const message = error.data?.message || 'Failed to delete product.';
+    toast.error('Error', message);
   }
 }
 

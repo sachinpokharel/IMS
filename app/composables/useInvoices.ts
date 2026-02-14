@@ -49,7 +49,7 @@ export interface Invoice {
 export const useInvoices = () => {
   const { data: invoices, refresh } = useAsyncData<Invoice[]>(
     'invoices',
-    () => $fetch('/api/invoices')
+    () => $fetch<Invoice[]>('/api/invoices')
   );
 
   async function fetchInvoices(status: string = 'all') {
@@ -84,6 +84,7 @@ export const useInvoices = () => {
       dueDate?: number;
       notes?: string;
       discountAmount?: number;
+      deliveryCharge?: number;
     }
   ) {
     const updated = await $fetch<Invoice>(`/api/invoices/${id}`, {

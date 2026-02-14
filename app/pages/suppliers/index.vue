@@ -100,9 +100,9 @@ async function deleteSupplier(id: string, name: string) {
     await $fetch(`/api/suppliers/${id}`, { method: 'DELETE' });
     toast.success('Supplier deleted successfully');
     refresh();
-  } catch (error) {
-    console.error('Failed to delete supplier:', error);
-    toast.error('Failed to delete supplier');
+  } catch (error: any) {
+    const message = error.data?.message || 'Failed to delete supplier.';
+    toast.error('Error', message);
   }
 }
 

@@ -3,9 +3,10 @@ import { generateId } from '../../utils/id';
 
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
-  console.log('User creation attempt by:', session.user?.email, 'Role:', session.user?.role);
+  const user = session.user as any;
+  console.log('User creation attempt by:', user?.email, 'Role:', user?.role);
 
-  if (!session.user) {
+  if (!user) {
     throw createError({
       statusCode: 401,
       message: 'Not authenticated',
@@ -13,7 +14,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Only admins can create users
-  if (session.user.role !== 'admin') {
+  if (user.role !== 'admin') {
     throw createError({
       statusCode: 403,
       message: 'Only administrators can create users',
@@ -78,7 +79,7 @@ export default defineEventHandler(async (event) => {
   // Note: we manually log because logActivity helper expects event.context.user
   await db.insert(tables.activityLogs).values({
     id: generateId(),
-    userId: session.user.id,
+    userId: user.id,
     action: 'created',
     entityType: 'user',
     entityId: userId,

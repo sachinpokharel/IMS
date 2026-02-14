@@ -134,11 +134,11 @@ export default defineEventHandler(async (event) => {
   ];
   await insertInBatches(categories, categoryData);
 
-  const smartphonesCategory = categoryData[1];
-  const laptopsCategory = categoryData[2];
-  const tshirtsCategory = categoryData[4];
-  const shoesCategory = categoryData[5];
-  const organicCategory = categoryData[7];
+  const smartphonesCategory = categoryData[1]!;
+  const laptopsCategory = categoryData[2]!;
+  const tshirtsCategory = categoryData[4]!;
+  const shoesCategory = categoryData[5]!;
+  const organicCategory = categoryData[7]!;
 
   const supplierData = [
     {
@@ -216,12 +216,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 899,
       sellingPrice: 1199,
       marginPercent: 33.4,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 45,
       stockMin: 10,
       stockMax: 100,
       unit: 'unit',
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
       isActive: true,
       options: JSON.stringify([
         { name: 'Storage', values: ['128GB', '256GB', '512GB', '1TB'] },
@@ -241,12 +241,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 1599,
       sellingPrice: 2199,
       marginPercent: 37.5,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 22,
       stockMin: 5,
       stockMax: 50,
       unit: 'unit',
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
       isActive: true,
       options: JSON.stringify([
         { name: 'RAM', values: ['18GB', '36GB'] },
@@ -263,12 +263,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 8.5,
       sellingPrice: 24.99,
       marginPercent: 66,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 350,
       stockMin: 50,
       stockMax: 500,
       unit: 'unit',
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!.id,
       isActive: true,
       options: JSON.stringify([
         { name: 'Size', values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'] },
@@ -285,12 +285,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 45,
       sellingPrice: 89.99,
       marginPercent: 50,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 78,
       stockMin: 20,
       stockMax: 150,
       unit: 'pair',
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!.id,
       isActive: true,
       options: JSON.stringify([
         {
@@ -310,12 +310,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 6.5,
       sellingPrice: 14.99,
       marginPercent: 56.6,
-      taxId: taxData[2].id,
+      taxId: taxData[2]!.id,
       stockQuantity: 120,
       stockMin: 30,
       stockMax: 200,
       unit: 'bottle',
-      supplierId: supplierData[2].id,
+      supplierId: supplierData[2]!.id,
       isActive: true,
     },
     {
@@ -328,12 +328,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 8,
       sellingPrice: 18.5,
       marginPercent: 56.8,
-      taxId: taxData[2].id,
+      taxId: taxData[2]!.id,
       stockQuantity: 85,
       stockMin: 20,
       stockMax: 150,
       unit: 'jar',
-      supplierId: supplierData[2].id,
+      supplierId: supplierData[2]!.id,
       isActive: true,
     },
     {
@@ -346,12 +346,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 750,
       sellingPrice: 1099,
       marginPercent: 46.5,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 0,
       stockMin: 10,
       stockMax: 80,
       unit: 'unit',
-      supplierId: supplierData[3].id,
+      supplierId: supplierData[3]!.id,
       isActive: true,
       options: JSON.stringify([
         { name: 'Storage', values: ['256GB', '512GB', '1TB'] },
@@ -371,12 +371,12 @@ export default defineEventHandler(async (event) => {
       costPrice: 180,
       sellingPrice: 279,
       marginPercent: 35.5,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 67,
       stockMin: 15,
       stockMax: 100,
       unit: 'unit',
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
       isActive: true,
     },
   ];
@@ -386,109 +386,109 @@ export default defineEventHandler(async (event) => {
     // iPhone variants
     {
       id: generateId('var'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       name: '128GB - Natural Titanium',
       sku: 'IPHONE-15-PRO-128-NAT',
       costPrice: 899,
       marginPercent: 33.4,
       price: 1199,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 15,
       stockMin: 3,
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
     },
     {
       id: generateId('var'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       name: '256GB - Blue Titanium',
       sku: 'IPHONE-15-PRO-256-BLU',
       costPrice: 999,
       marginPercent: 30,
       price: 1299,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 20,
       stockMin: 5,
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
     },
     {
       id: generateId('var'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       name: '512GB - White Titanium',
       sku: 'IPHONE-15-PRO-512-WHT',
       costPrice: 1149,
       marginPercent: 30.5,
       price: 1499,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 10,
       stockMin: 2,
-      supplierId: supplierData[0].id,
+      supplierId: supplierData[0]!.id,
     },
     // T-Shirt variants
     {
       id: generateId('var'),
-      productId: productData[2].id,
+      productId: productData[2]!!.id,
       name: 'M - White',
       sku: 'TSHIRT-BASIC-M-WHT',
       costPrice: 8.5,
       marginPercent: 66,
       price: 24.99,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!!.id,
       stockQuantity: 50,
       stockMin: 10,
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!!.id,
     },
     {
       id: generateId('var'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       name: 'L - Black',
       sku: 'TSHIRT-BASIC-L-BLK',
       costPrice: 8.5,
       marginPercent: 66,
       price: 24.99,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 45,
       stockMin: 10,
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!.id,
     },
     {
       id: generateId('var'),
-      productId: productData[2].id,
+      productId: productData[2]!!.id,
       name: 'XL - Navy',
       sku: 'TSHIRT-BASIC-XL-NAV',
       costPrice: 8.5,
       marginPercent: 66,
       price: 24.99,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!!.id,
       stockQuantity: 30,
       stockMin: 8,
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!!.id,
     },
     // Sneakers variants
     {
       id: generateId('var'),
-      productId: productData[3].id,
+      productId: productData[3]!.id,
       name: '42 - Black/Red',
       sku: 'SNEAKERS-42-BLKRED',
       costPrice: 45,
       marginPercent: 50,
       price: 89.99,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 12,
       stockMin: 3,
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!.id,
     },
     {
       id: generateId('var'),
-      productId: productData[3].id,
+      productId: productData[3]!.id,
       name: '43 - White/Blue',
       sku: 'SNEAKERS-43-WHTBLU',
       costPrice: 45,
       marginPercent: 50,
       price: 89.99,
-      taxId: taxData[0].id,
+      taxId: taxData[0]!.id,
       stockQuantity: 8,
       stockMin: 3,
-      supplierId: supplierData[1].id,
+      supplierId: supplierData[1]!.id,
     },
   ];
   await insertInBatches(productVariants, variantData);
@@ -497,8 +497,8 @@ export default defineEventHandler(async (event) => {
     // iPhone from main supplier
     {
       id: generateId('sp'),
-      productId: productData[0].id,
-      supplierId: supplierData[0].id,
+      productId: productData[0]!.id,
+      supplierId: supplierData[0]!.id,
       price: 899,
       minQuantity: 1,
       leadTimeDays: 3,
@@ -509,8 +509,8 @@ export default defineEventHandler(async (event) => {
     // iPhone from Asia supplier (cheaper but longer lead time)
     {
       id: generateId('sp'),
-      productId: productData[0].id,
-      supplierId: supplierData[3].id,
+      productId: productData[0]!.id,
+      supplierId: supplierData[3]!.id,
       price: 820,
       minQuantity: 10,
       leadTimeDays: 21,
@@ -521,8 +521,8 @@ export default defineEventHandler(async (event) => {
     // MacBook
     {
       id: generateId('sp'),
-      productId: productData[1].id,
-      supplierId: supplierData[0].id,
+      productId: productData[1]!.id,
+      supplierId: supplierData[0]!.id,
       price: 1599,
       minQuantity: 1,
       leadTimeDays: 5,
@@ -533,8 +533,8 @@ export default defineEventHandler(async (event) => {
     // T-Shirt
     {
       id: generateId('sp'),
-      productId: productData[2].id,
-      supplierId: supplierData[1].id,
+      productId: productData[2]!.id,
+      supplierId: supplierData[1]!.id,
       price: 8.5,
       minQuantity: 50,
       leadTimeDays: 7,
@@ -545,8 +545,8 @@ export default defineEventHandler(async (event) => {
     // Sneakers
     {
       id: generateId('sp'),
-      productId: productData[3].id,
-      supplierId: supplierData[1].id,
+      productId: productData[3]!.id,
+      supplierId: supplierData[1]!.id,
       price: 45,
       minQuantity: 20,
       leadTimeDays: 10,
@@ -557,8 +557,8 @@ export default defineEventHandler(async (event) => {
     // Olive Oil
     {
       id: generateId('sp'),
-      productId: productData[4].id,
-      supplierId: supplierData[2].id,
+      productId: productData[4]!.id,
+      supplierId: supplierData[2]!.id,
       price: 6.5,
       minQuantity: 24,
       leadTimeDays: 4,
@@ -569,8 +569,8 @@ export default defineEventHandler(async (event) => {
     // Honey
     {
       id: generateId('sp'),
-      productId: productData[5].id,
-      supplierId: supplierData[2].id,
+      productId: productData[5]!.id,
+      supplierId: supplierData[2]!.id,
       price: 8,
       minQuantity: 12,
       leadTimeDays: 4,
@@ -581,8 +581,8 @@ export default defineEventHandler(async (event) => {
     // Samsung from Asia
     {
       id: generateId('sp'),
-      productId: productData[6].id,
-      supplierId: supplierData[3].id,
+      productId: productData[6]!.id,
+      supplierId: supplierData[3]!.id,
       price: 750,
       minQuantity: 5,
       leadTimeDays: 14,
@@ -593,8 +593,8 @@ export default defineEventHandler(async (event) => {
     // AirPods
     {
       id: generateId('sp'),
-      productId: productData[7].id,
-      supplierId: supplierData[0].id,
+      productId: productData[7]!.id,
+      supplierId: supplierData[0]!.id,
       price: 180,
       minQuantity: 5,
       leadTimeDays: 3,
@@ -629,64 +629,64 @@ export default defineEventHandler(async (event) => {
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[0].id,
+      supplierPriceId: supplierPriceData[0]!.id,
       price: 889,
       createdAt: oneMonthAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[0].id,
+      supplierPriceId: supplierPriceData[0]!.id,
       price: 899,
       createdAt: oneWeekAgo,
     },
     // MacBook price history
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[2].id,
+      supplierPriceId: supplierPriceData[2]!.id,
       price: 1649,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[2].id,
+      supplierPriceId: supplierPriceData[2]!.id,
       price: 1599,
       createdAt: oneMonthAgo,
     },
     // T-Shirt price history (stable then slight increase)
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[3].id,
+      supplierPriceId: supplierPriceData[3]!.id,
       price: 7.5,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[3].id,
+      supplierPriceId: supplierPriceData[3]!.id,
       price: 8.0,
       createdAt: sixWeeksAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[3].id,
+      supplierPriceId: supplierPriceData[3]!.id,
       price: 8.5,
       createdAt: twoWeeksAgo,
     },
     // Olive oil price history (seasonal variation)
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[5].id,
+      supplierPriceId: supplierPriceData[5]!.id,
       price: 5.8,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[5].id,
+      supplierPriceId: supplierPriceData[5]!.id,
       price: 6.2,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('sph'),
-      supplierPriceId: supplierPriceData[5].id,
+      supplierPriceId: supplierPriceData[5]!.id,
       price: 6.5,
       createdAt: oneMonthAgo,
     },
@@ -697,130 +697,130 @@ export default defineEventHandler(async (event) => {
     // iPhone selling price history
     {
       id: generateId('selph'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       price: 1149,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       price: 1179,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       price: 1199,
       createdAt: oneMonthAgo,
     },
     // MacBook selling price history
     {
       id: generateId('selph'),
-      productId: productData[1].id,
+      productId: productData[1]!.id,
       price: 2299,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[1].id,
+      productId: productData[1]!.id,
       price: 2249,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[1].id,
+      productId: productData[1]!.id,
       price: 2199,
       createdAt: oneMonthAgo,
     },
     // T-Shirt selling price (promo then back to normal)
     {
       id: generateId('selph'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       price: 29.99,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       price: 19.99,
       createdAt: sixWeeksAgo,
       createdBy: 'promo-black-friday',
     },
     {
       id: generateId('selph'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       price: 24.99,
       createdAt: twoWeeksAgo,
     },
     // Sneakers price history
     {
       id: generateId('selph'),
-      productId: productData[3].id,
+      productId: productData[3]!.id,
       price: 79.99,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[3].id,
+      productId: productData[3]!.id,
       price: 84.99,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[3].id,
+      productId: productData[3]!.id,
       price: 89.99,
       createdAt: oneMonthAgo,
     },
     // Olive oil (seasonal pricing)
     {
       id: generateId('selph'),
-      productId: productData[4].id,
+      productId: productData[4]!.id,
       price: 12.99,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[4].id,
+      productId: productData[4]!.id,
       price: 13.99,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[4].id,
+      productId: productData[4]!.id,
       price: 14.99,
       createdAt: oneMonthAgo,
     },
     // AirPods (price drop)
     {
       id: generateId('selph'),
-      productId: productData[7].id,
+      productId: productData[7]!.id,
       price: 299,
       createdAt: threeMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[7].id,
+      productId: productData[7]!.id,
       price: 289,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[7].id,
+      productId: productData[7]!!.id,
       price: 279,
       createdAt: oneMonthAgo,
     },
     // Variant price history (iPhone 256GB variant)
     {
       id: generateId('selph'),
-      productId: productData[0].id,
-      variantId: variantData[1].id,
+      productId: productData[0]!.id,
+      variantId: variantData[1]!.id,
       price: 1249,
       createdAt: twoMonthsAgo,
     },
     {
       id: generateId('selph'),
-      productId: productData[0].id,
-      variantId: variantData[1].id,
+      productId: productData[0]!.id,
+      variantId: variantData[1]!.id,
       price: 1299,
       createdAt: oneMonthAgo,
     },
@@ -850,7 +850,7 @@ export default defineEventHandler(async (event) => {
   let iphoneStock = 30;
   movementData.push({
     id: generateId('mov'),
-    productId: productData[0].id,
+    productId: productData[0]!.id,
     type: 'in',
     quantity: 30,
     stockBefore: 0,
@@ -858,18 +858,18 @@ export default defineEventHandler(async (event) => {
     unitCost: 899,
     reference: 'PO-2024-001',
     reason: 'Initial stock',
-    supplierId: supplierData[0].id,
+    supplierId: supplierData[0]!.id,
     createdAt: daysAgo(14),
   });
 
   // Simulate daily sales and restocks
   const iphoneDailySales = [3, 2, 4, 1, 5, 2, 3, 6, 2, 4, 3, 2, 5, 3];
   for (let i = 13; i >= 0; i--) {
-    const sales = iphoneDailySales[13 - i];
+    const sales = iphoneDailySales[13 - i]!;
     if (sales > 0) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[0].id,
+        productId: productData[0]!.id,
         type: 'out',
         quantity: -sales,
         stockBefore: iphoneStock,
@@ -885,7 +885,7 @@ export default defineEventHandler(async (event) => {
     if (i === 10 || i === 5) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[0].id,
+        productId: productData[0]!.id,
         type: 'in',
         quantity: 20,
         stockBefore: iphoneStock,
@@ -893,7 +893,7 @@ export default defineEventHandler(async (event) => {
         unitCost: 899,
         reference: `PO-2024-00${i === 10 ? 2 : 3}`,
         reason: 'Restock order',
-        supplierId: supplierData[0].id,
+        supplierId: supplierData[0]!.id,
         createdAt: daysAgo(i),
       });
       iphoneStock += 20;
@@ -904,7 +904,7 @@ export default defineEventHandler(async (event) => {
   let tshirtStock = 200;
   movementData.push({
     id: generateId('mov'),
-    productId: productData[2].id,
+    productId: productData[2]!.id,
     type: 'in',
     quantity: 200,
     stockBefore: 0,
@@ -912,7 +912,7 @@ export default defineEventHandler(async (event) => {
     unitCost: 8.5,
     reference: 'PO-2024-010',
     reason: 'Seasonal stock',
-    supplierId: supplierData[1].id,
+    supplierId: supplierData[1]!.id,
     createdAt: daysAgo(14),
   });
 
@@ -920,10 +920,10 @@ export default defineEventHandler(async (event) => {
     15, 12, 20, 8, 25, 18, 22, 30, 14, 19, 16, 21, 28, 17,
   ];
   for (let i = 13; i >= 0; i--) {
-    const sales = tshirtDailySales[13 - i];
+    const sales = tshirtDailySales[13 - i]!;
     movementData.push({
       id: generateId('mov'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       type: 'out',
       quantity: -sales,
       stockBefore: tshirtStock,
@@ -938,7 +938,7 @@ export default defineEventHandler(async (event) => {
     if (i === 7) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[2].id,
+        productId: productData[2]!.id,
         type: 'in',
         quantity: 200,
         stockBefore: tshirtStock,
@@ -946,7 +946,7 @@ export default defineEventHandler(async (event) => {
         unitCost: 8.5,
         reference: 'PO-2024-011',
         reason: 'Restock - high demand',
-        supplierId: supplierData[1].id,
+        supplierId: supplierData[1]!.id,
         createdAt: daysAgo(i),
       });
       tshirtStock += 200;
@@ -957,7 +957,7 @@ export default defineEventHandler(async (event) => {
   let sneakersStock = 50;
   movementData.push({
     id: generateId('mov'),
-    productId: productData[3].id,
+    productId: productData[3]!.id,
     type: 'in',
     quantity: 50,
     stockBefore: 0,
@@ -965,17 +965,17 @@ export default defineEventHandler(async (event) => {
     unitCost: 45,
     reference: 'PO-2024-020',
     reason: 'Initial stock',
-    supplierId: supplierData[1].id,
+    supplierId: supplierData[1]!.id,
     createdAt: daysAgo(14),
   });
 
   const sneakersSales = [2, 1, 3, 0, 4, 2, 1, 5, 2, 3, 1, 2, 4, 2];
   for (let i = 13; i >= 0; i--) {
-    const sales = sneakersSales[13 - i];
+    const sales = sneakersSales[13 - i]!;
     if (sales > 0) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[3].id,
+        productId: productData[3]!.id,
         type: 'out',
         quantity: -sales,
         stockBefore: sneakersStock,
@@ -990,7 +990,7 @@ export default defineEventHandler(async (event) => {
     if (i === 6) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[3].id,
+        productId: productData[3]!.id,
         type: 'in',
         quantity: 40,
         stockBefore: sneakersStock,
@@ -998,7 +998,7 @@ export default defineEventHandler(async (event) => {
         unitCost: 45,
         reference: 'PO-2024-021',
         reason: 'Restock',
-        supplierId: supplierData[1].id,
+        supplierId: supplierData[1]!.id,
         createdAt: daysAgo(i),
       });
       sneakersStock += 40;
@@ -1009,7 +1009,7 @@ export default defineEventHandler(async (event) => {
   let oliveOilStock = 100;
   movementData.push({
     id: generateId('mov'),
-    productId: productData[4].id,
+    productId: productData[4]!.id,
     type: 'in',
     quantity: 100,
     stockBefore: 0,
@@ -1017,16 +1017,16 @@ export default defineEventHandler(async (event) => {
     unitCost: 6.5,
     reference: 'PO-2024-030',
     reason: 'Seasonal stock',
-    supplierId: supplierData[2].id,
+    supplierId: supplierData[2]!.id,
     createdAt: daysAgo(14),
   });
 
   const oliveOilSales = [5, 4, 6, 3, 7, 5, 4, 8, 5, 6, 4, 5, 7, 6];
   for (let i = 13; i >= 0; i--) {
-    const sales = oliveOilSales[13 - i];
+    const sales = oliveOilSales[13 - i]!;
     movementData.push({
       id: generateId('mov'),
-      productId: productData[4].id,
+      productId: productData[4]!.id,
       type: 'out',
       quantity: -sales,
       stockBefore: oliveOilStock,
@@ -1041,7 +1041,7 @@ export default defineEventHandler(async (event) => {
   // Restock at end
   movementData.push({
     id: generateId('mov'),
-    productId: productData[4].id,
+    productId: productData[4]!.id,
     type: 'in',
     quantity: 50,
     stockBefore: oliveOilStock,
@@ -1049,7 +1049,7 @@ export default defineEventHandler(async (event) => {
     unitCost: 6.5,
     reference: 'PO-2024-031',
     reason: 'Weekly restock',
-    supplierId: supplierData[2].id,
+    supplierId: supplierData[2]!.id,
     createdAt: daysAgo(0),
   });
 
@@ -1057,7 +1057,7 @@ export default defineEventHandler(async (event) => {
   let airpodsStock = 40;
   movementData.push({
     id: generateId('mov'),
-    productId: productData[7].id,
+    productId: productData[7]!.id,
     type: 'in',
     quantity: 40,
     stockBefore: 0,
@@ -1065,17 +1065,17 @@ export default defineEventHandler(async (event) => {
     unitCost: 180,
     reference: 'PO-2024-040',
     reason: 'Initial stock',
-    supplierId: supplierData[0].id,
+    supplierId: supplierData[0]!.id,
     createdAt: daysAgo(14),
   });
 
   const airpodsSales = [2, 1, 3, 2, 4, 2, 3, 5, 2, 3, 2, 2, 4, 2];
   for (let i = 13; i >= 0; i--) {
-    const sales = airpodsSales[13 - i];
+    const sales = airpodsSales[13 - i]!;
     if (sales > 0) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[7].id,
+        productId: productData[7]!.id,
         type: 'out',
         quantity: -sales,
         stockBefore: airpodsStock,
@@ -1090,7 +1090,7 @@ export default defineEventHandler(async (event) => {
     if (i === 8) {
       movementData.push({
         id: generateId('mov'),
-        productId: productData[7].id,
+        productId: productData[7]!.id,
         type: 'in',
         quantity: 30,
         stockBefore: airpodsStock,
@@ -1098,7 +1098,7 @@ export default defineEventHandler(async (event) => {
         unitCost: 180,
         reference: 'PO-2024-041',
         reason: 'Restock',
-        supplierId: supplierData[0].id,
+        supplierId: supplierData[0]!.id,
         createdAt: daysAgo(i),
       });
       airpodsStock += 30;
@@ -1109,7 +1109,7 @@ export default defineEventHandler(async (event) => {
   movementData.push(
     {
       id: generateId('mov'),
-      productId: productData[0].id,
+      productId: productData[0]!.id,
       type: 'return',
       quantity: 1,
       stockBefore: iphoneStock,
@@ -1121,7 +1121,7 @@ export default defineEventHandler(async (event) => {
     },
     {
       id: generateId('mov'),
-      productId: productData[2].id,
+      productId: productData[2]!.id,
       type: 'adjustment',
       quantity: -5,
       stockBefore: tshirtStock,
@@ -1132,7 +1132,7 @@ export default defineEventHandler(async (event) => {
     },
     {
       id: generateId('mov'),
-      productId: productData[7].id,
+      productId: productData[7]!.id,
       type: 'return',
       quantity: 2,
       stockBefore: airpodsStock,

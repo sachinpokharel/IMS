@@ -397,8 +397,8 @@ async function handleFinalize() {
                 </button>
                 <button
                   @click="handleRecordPayment"
-                  :disabled="!paymentForm.amount || saving || paymentForm.amount > remainingBalance"
-                  :title="paymentForm.amount > remainingBalance ? 'Amount exceeds remaining balance' : ''"
+                  :disabled="!paymentForm.amount || saving || Number(paymentForm.amount) > remainingBalance"
+                  :title="Number(paymentForm.amount) > remainingBalance ? 'Amount exceeds remaining balance' : ''"
                   class="inline-flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 disabled:opacity-50 transition-all"
                 >
                   <Icon name="lucide:check" class="h-4 w-4" />

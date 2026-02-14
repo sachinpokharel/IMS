@@ -2,16 +2,10 @@ import { desc } from 'drizzle-orm';
 
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
-
-  if (!session.user) {
-    throw createError({
-      statusCode: 401,
-      message: 'Not authenticated',
-    });
-  }
+  const user = session.user as any;
 
   // Only admins can list users
-  if (session.user.role !== 'admin') {
+  if (!user || user.role !== 'admin') {
     throw createError({
       statusCode: 403,
       message: 'Only administrators can manage users',

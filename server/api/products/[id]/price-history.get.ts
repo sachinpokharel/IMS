@@ -7,7 +7,7 @@ import {
 } from '~~/server/database/schema';
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id');
+  const id = getRouterParam(event, 'id')!;
   const db = useDrizzle();
 
   if (!id) {
@@ -78,35 +78,35 @@ export default defineEventHandler(async (event) => {
 
   const sellingPriceData = sortedDates.map((date) => {
     const relevantHistory = sellingHistory
-      .filter(
-        (h) =>
-          h.createdAt &&
-          new Date(h.createdAt).toISOString().split('T')[0] <= date
-      )
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
-      );
+      .filter((h) => {
+        if (!h.createdAt) return false;
+        const hDate = new Date(h.createdAt).toISOString().split('T')[0];
+        return hDate !== undefined && hDate <= date;
+      })
+      .sort((a, b) => {
+        return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
+      });
 
     return relevantHistory.length > 0
-      ? relevantHistory[0].price
+      ? relevantHistory[0]!.price
       : product.sellingPrice || 0;
   });
 
   const supplierDatasets = productSuppliers.map((sp) => {
     const priceData = sortedDates.map((date) => {
       const relevantHistory = (sp.priceHistory || [])
-        .filter(
-          (h) =>
-            h.createdAt &&
-            new Date(h.createdAt).toISOString().split('T')[0] <= date
-        )
-        .sort(
-          (a, b) =>
+        .filter((h) => {
+          if (!h.createdAt) return false;
+          const hDate = new Date(h.createdAt).toISOString().split('T')[0];
+          return hDate !== undefined && hDate <= date;
+        })
+        .sort((a, b) => {
+          return (
             new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
-        );
+          );
+        });
 
-      return relevantHistory.length > 0 ? relevantHistory[0].price : sp.price;
+      return relevantHistory.length > 0 ? relevantHistory[0]!.price : sp.price;
     });
 
     return {

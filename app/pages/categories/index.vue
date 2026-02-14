@@ -114,9 +114,9 @@ async function deleteCategory(id: string, name: string) {
     await $fetch(`/api/categories/${id}`, { method: 'DELETE' });
     toast.success('Category deleted successfully');
     refresh();
-  } catch (error) {
-    console.error('Failed to delete category:', error);
-    toast.error('Failed to delete category');
+  } catch (error: any) {
+    const message = error.data?.message || 'Failed to delete category.';
+    toast.error('Error', message);
   }
 }
 

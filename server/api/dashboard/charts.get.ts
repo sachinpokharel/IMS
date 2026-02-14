@@ -105,7 +105,7 @@ function processMovementsByDay(
   for (let i = 13; i >= 0; i--) {
     const date = new Date();
     date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = date.toISOString().split('T')[0]!;
     dates.push(dateStr);
     dateMap.set(dateStr, { in: 0, out: 0 });
   }

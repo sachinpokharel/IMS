@@ -3,8 +3,9 @@ import { eq } from 'drizzle-orm';
 
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
+  const user = session.user as any;
 
-  if (!session.user) {
+  if (!user) {
     throw createError({
       statusCode: 401,
       message: 'Not authenticated',
@@ -12,7 +13,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Only admins can update users
-  if (session.user.role !== 'admin') {
+  if (user.role !== 'admin') {
     throw createError({
       statusCode: 403,
       message: 'Only administrators can update users',
@@ -45,7 +46,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Prevent modifying the admin's own role
-  if (id === session.user.id && body.role && body.role !== session.user.role) {
+  if (id === user.id && body.role && body.role !== user.role) {
     throw createError({
       statusCode: 403,
       message: 'You cannot change your own role',
@@ -53,7 +54,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Prevent deactivating yourself
-  if (id === session.user.id && body.isActive === false) {
+  if (id === user.id && body.isActive === false) {
     throw createError({
       statusCode: 403,
       message: 'You cannot deactivate your own account',

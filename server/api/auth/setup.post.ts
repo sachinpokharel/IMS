@@ -30,8 +30,9 @@ export default defineEventHandler(async (event) => {
   const db = useDB();
 
   // Check if any users already exist
-  const [result] = await db.select({ count: count() }).from(users);
-  if (result.count > 0) {
+  const results = await db.select({ count: count() }).from(users);
+  const result = results[0];
+  if (result && result.count > 0) {
     throw createError({
       statusCode: 403,
       message: 'Setup already completed. Please use the login page.',

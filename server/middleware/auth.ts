@@ -104,7 +104,7 @@ export default defineEventHandler(async (event) => {
     path.startsWith(adminPath)
   );
 
-  if (isAdminRoute && session.user.role !== 'admin') {
+  if (isAdminRoute && (session.user as any).role !== 'admin') {
     throw createError({
       statusCode: 403,
       message: 'Administrator access required',
@@ -115,7 +115,7 @@ export default defineEventHandler(async (event) => {
   // VIEWER RESTRICTIONS (read-only access)
   // Viewers can only perform GET requests
   // ============================================================================
-  if (session.user.role === 'viewer') {
+  if ((session.user as any).role === 'viewer') {
     const writeMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
 
     // Allow logout for viewers

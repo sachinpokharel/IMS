@@ -188,7 +188,7 @@ function isDuplicateProduct(productId: string, variantId: string | undefined, cu
 
 function validateProductSelection(itemIndex: number) {
   const item = form.items[itemIndex];
-  if (!item.productId) return true;
+  if (!item || !item.productId) return true;
   
   if (isDuplicateProduct(item.productId, item.variantId, itemIndex)) {
     const product = products.value.find((p) => p.id === item.productId);
@@ -261,7 +261,7 @@ async function handleCreateCustomer() {
 
 function validateStock(itemIndex: number) {
   const item = form.items[itemIndex];
-  if (!item.productId) return true;
+  if (!item || !item.productId) return true;
   
   const availableStock = getAvailableStock(item.productId, item.variantId, itemIndex);
   if (item.quantity > availableStock) {
@@ -320,6 +320,12 @@ function formatCurrency(amount: number) {
   }).format(amount);
 }
 
+function handleCustomerBlur() {
+  setTimeout(() => {
+    showCustomerDropdown.value = false;
+  }, 200);
+}
+
 async function handleSubmit() {
   if (!form.customerId) {
     toast.error('⚠️ Please select a customer');
@@ -328,7 +334,7 @@ async function handleSubmit() {
 
   // Validate each item
   for (let i = 0; i < form.items.length; i++) {
-    const item = form.items[i];
+    const item = form.items[i]!;
     
     if (!item.productId) {
       toast.error(`❌ Item ${i + 1}: Please select a product`);
@@ -437,7 +443,7 @@ async function handleSubmit() {
               v-else
               v-model="customerSearchQuery"
               @focus="showCustomerDropdown = true"
-              @blur="setTimeout(() => showCustomerDropdown = false, 200)"
+              @blur="handleCustomerBlur"
               type="text"
               placeholder="Search by name, phone, or ID..."
               class="w-full rounded-md border border-gray-300 px-4 py-2.5 focus:outline-none focus:border-blue-500"

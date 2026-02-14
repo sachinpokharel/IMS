@@ -29,8 +29,9 @@ export default defineEventHandler(async () => {
   const db = useDB();
 
   // Check if any users exist in the database
-  const [result] = await db.select({ count: count() }).from(users);
-  const hasUsers = result.count > 0;
+  const results = await db.select({ count: count() }).from(users);
+  const result = results[0];
+  const hasUsers = result ? result.count > 0 : false;
 
   return {
     hasUsers,

@@ -161,7 +161,7 @@ async function createMovement() {
 }
 
 function getMovementType(type: string) {
-  return movementTypes.find((t) => t.value === type) || movementTypes[0];
+  return movementTypes.find((t) => t.value === type) || movementTypes[0]!;
 }
 
 function formatDate(date: Date | string) {
