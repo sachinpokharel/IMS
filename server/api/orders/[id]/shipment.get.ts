@@ -25,10 +25,10 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!shipment) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: 'Shipment not found for this order',
-      });
+      return {
+        success: true,
+        data: null,
+      };
     }
 
     return {

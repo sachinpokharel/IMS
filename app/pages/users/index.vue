@@ -11,12 +11,14 @@ interface User {
 const { user: currentUser } = useAuth();
 const toast = useToast();
 
-const { data: users, refresh } = await useFetch<User[]>('/api/users');
+const { data: users, refresh, error: fetchError, pending } = await useFetch<User[]>('/api/users');
 
 const showModal = ref(false);
 const showEditModal = ref(false);
 const editingUser = ref<User | null>(null);
 const isSubmitting = ref(false);
+const error = ref('');
+const editError = ref('');
 
 const form = reactive({
   name: '',
@@ -34,10 +36,12 @@ const editForm = reactive({
 });
 
 function openCreateModal() {
+  console.log('Opening create user modal');
   form.name = '';
   form.email = '';
   form.password = '';
   form.role = 'member';
+  error.value = '';
   showModal.value = true;
 }
 
@@ -48,17 +52,19 @@ function openEditModal(user: User) {
   editForm.password = '';
   editForm.role = user.role === 'admin' ? 'member' : user.role;
   editForm.isActive = user.isActive;
+  editError.value = '';
   showEditModal.value = true;
 }
 
 async function createUser() {
+  error.value = '';
   if (!form.name.trim() || !form.email.trim() || !form.password) {
-    toast.error('Please fill all fields');
+    error.value = 'Please fill all fields';
     return;
   }
 
   if (form.password.length < 8) {
-    toast.error('Password must be at least 8 characters');
+    error.value = 'Password must be at least 8 characters';
     return;
   }
 
@@ -78,9 +84,9 @@ async function createUser() {
     toast.success('User created successfully');
     showModal.value = false;
     await refresh();
-  } catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
-    toast.error(err.data?.message || 'Failed to create user');
+  } catch (e: any) {
+    console.error('Failed to create user:', e);
+    error.value = e.data?.message || e.message || 'Failed to create user';
   } finally {
     isSubmitting.value = false;
   }
@@ -88,14 +94,15 @@ async function createUser() {
 
 async function updateUser() {
   if (!editingUser.value) return;
+  editError.value = '';
 
   if (!editForm.name.trim() || !editForm.email.trim()) {
-    toast.error('Name and email are required');
+    editError.value = 'Name and email are required';
     return;
   }
 
   if (editForm.password && editForm.password.length < 8) {
-    toast.error('Password must be at least 8 characters');
+    editError.value = 'Password must be at least 8 characters';
     return;
   }
 
@@ -126,9 +133,9 @@ async function updateUser() {
     showEditModal.value = false;
     editingUser.value = null;
     await refresh();
-  } catch (e: unknown) {
-    const err = e as { data?: { message?: string } };
-    toast.error(err.data?.message || 'Failed to update user');
+  } catch (e: any) {
+    console.error('Failed to update user:', e);
+    editError.value = e.data?.message || e.message || 'Failed to update user';
   } finally {
     isSubmitting.value = false;
   }
@@ -174,10 +181,27 @@ function formatDate(date: string): string {
           Manage user accounts and access levels.
         </p>
       </div>
-      <UiButton @click="openCreateModal">
-        <Icon name="lucide:plus" class="w-4 h-4 mr-2" />
-        Add User
-      </UiButton>
+      <div class="flex items-center gap-2">
+        <UiButton variant="ghost" size="sm" @click="() => refresh()" :loading="pending">
+          <Icon name="lucide:refresh-cw" class="w-4 h-4 mr-2" />
+          Refresh
+        </UiButton>
+        <UiButton @click="openCreateModal">
+          <Icon name="lucide:plus" class="w-4 h-4 mr-2" />
+          Add User
+        </UiButton>
+      </div>
+    </div>
+
+    <div v-if="fetchError" class="p-4 rounded-lg bg-red-50 border border-red-200">
+      <div class="flex items-center gap-3">
+        <Icon name="lucide:alert-circle" class="w-5 h-5 text-red-600" />
+        <div class="flex-1">
+          <h3 class="text-sm font-medium text-red-800">Failed to load users</h3>
+          <p class="text-xs text-red-700 mt-1">{{ fetchError.data?.message || fetchError.message || 'An error occurred while fetching the user list.' }}</p>
+        </div>
+        <UiButton size="sm" variant="outline" @click="() => refresh()">Retry</UiButton>
+      </div>
     </div>
 
     <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
@@ -294,6 +318,13 @@ function formatDate(date: string): string {
 
     <!-- Create User Modal -->
     <UiModal v-model:open="showModal" title="Add New User">
+      <div v-if="error" class="mb-4 p-3 rounded-md bg-red-50 border border-red-200">
+        <p class="text-sm text-red-600 flex items-center gap-2">
+          <Icon name="lucide:alert-circle" class="w-4 h-4 shrink-0" />
+          {{ error }}
+        </p>
+      </div>
+
       <form @submit.prevent="createUser" class="space-y-4">
         <UiInput
           v-model="form.name"
@@ -353,6 +384,13 @@ function formatDate(date: string): string {
 
     <!-- Edit User Modal -->
     <UiModal v-model:open="showEditModal" title="Edit User">
+      <div v-if="editError" class="mb-4 p-3 rounded-md bg-red-50 border border-red-200">
+        <p class="text-sm text-red-600 flex items-center gap-2">
+          <Icon name="lucide:alert-circle" class="w-4 h-4 shrink-0" />
+          {{ editError }}
+        </p>
+      </div>
+
       <form @submit.prevent="updateUser" class="space-y-4">
         <UiInput
           v-model="editForm.name"

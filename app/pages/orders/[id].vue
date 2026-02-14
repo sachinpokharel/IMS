@@ -149,15 +149,12 @@ async function loadShipmentTracking() {
   
   try {
     // Fetch shipment by order ID
-    const response = await $fetch<{ success: boolean; data: Shipment }>(`/api/orders/${order.value.id}/shipment`);
+    const response = await $fetch<{ success: boolean; data: Shipment | null }>(`/api/orders/${order.value.id}/shipment`);
     if (response.success && response.data) {
       shipment.value = response.data;
     }
   } catch (error: any) {
-    // No shipment exists yet - that's ok
-    if (error.statusCode !== 404) {
-      console.error('Error loading shipment:', error);
-    }
+    console.error('Error loading shipment:', error);
   }
 }
 

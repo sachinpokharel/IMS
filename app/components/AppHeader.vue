@@ -31,6 +31,8 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 
+let notificationInterval: any = null;
+
 onMounted(async () => {
   if (import.meta.client) {
     document.addEventListener('click', handleClickOutside);
@@ -49,7 +51,7 @@ onMounted(async () => {
         console.warn('Failed to load notifications on mount:', error);
       }
       
-      const intervalId = setInterval(async () => {
+      notificationInterval = setInterval(async () => {
         if (loggedIn.value) {
           try {
             await syncGeneratedNotifications();
@@ -58,10 +60,6 @@ onMounted(async () => {
           }
         }
       }, 60000); // 60 seconds
-      
-      onUnmounted(() => {
-        clearInterval(intervalId);
-      });
     }
   }
 });
@@ -69,6 +67,9 @@ onMounted(async () => {
 onUnmounted(() => {
   if (import.meta.client) {
     document.removeEventListener('click', handleClickOutside);
+    if (notificationInterval) {
+      clearInterval(notificationInterval);
+    }
   }
 });
 

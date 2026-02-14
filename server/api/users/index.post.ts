@@ -1,9 +1,9 @@
-import { users } from '../../database/schema';
 import { eq } from 'drizzle-orm';
 import { generateId } from '../../utils/id';
 
 export default defineEventHandler(async (event) => {
   const session = await getUserSession(event);
+  console.log('User creation attempt by:', session.user?.email, 'Role:', session.user?.role);
 
   if (!session.user) {
     throw createError({
@@ -37,11 +37,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const email = body.email.toLowerCase().trim();
+
   // Check if email already exists
   const existingUser = await db
     .select()
-    .from(users)
-    .where(eq(users.email, body.email.toLowerCase().trim()))
+    .from(tables.users)
+    .where(eq(tables.users.email, email))
     .get();
 
   if (existingUser) {
@@ -58,21 +60,36 @@ export default defineEventHandler(async (event) => {
   const allowedRoles = ['member', 'viewer'] as const;
   const role = allowedRoles.includes(body.role) ? body.role : 'member';
 
-  // Create the user (admin can only create members or viewers, not other admins)
+  const userId = generateId();
+
+  // Create the user
   const newUser = {
-    id: generateId(),
-    email: body.email.toLowerCase().trim(),
+    id: userId,
+    email,
     passwordHash,
     name: body.name.trim(),
     role: role as 'member' | 'viewer',
     isActive: true,
   };
 
-  await db.insert(users).values(newUser);
+  await db.insert(tables.users).values(newUser);
+
+  // Log activity
+  // Note: we manually log because logActivity helper expects event.context.user
+  await db.insert(tables.activityLogs).values({
+    id: generateId(),
+    userId: session.user.id,
+    action: 'created',
+    entityType: 'user',
+    entityId: userId,
+    entityName: email,
+    details: JSON.stringify({ role }),
+    createdAt: new Date(),
+  });
 
   return {
-    id: newUser.id,
-    email: newUser.email,
+    id: userId,
+    email,
     name: newUser.name,
     role: newUser.role,
     isActive: newUser.isActive,

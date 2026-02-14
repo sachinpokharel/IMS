@@ -1,4 +1,3 @@
-import { users } from '../../database/schema';
 import { desc } from 'drizzle-orm';
 
 export default defineEventHandler(async (event) => {
@@ -23,15 +22,15 @@ export default defineEventHandler(async (event) => {
 
   const allUsers = await db
     .select({
-      id: users.id,
-      email: users.email,
-      name: users.name,
-      role: users.role,
-      isActive: users.isActive,
-      createdAt: users.createdAt,
+      id: tables.users.id,
+      email: tables.users.email,
+      name: tables.users.name,
+      role: tables.users.role,
+      isActive: tables.users.isActive,
+      createdAt: tables.users.createdAt,
     })
-    .from(users)
-    .orderBy(desc(users.createdAt));
+    .from(tables.users)
+    .orderBy(desc(tables.users.createdAt));
 
   return allUsers;
 });

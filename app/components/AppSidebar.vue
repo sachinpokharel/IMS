@@ -10,11 +10,12 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: 'lucide:layout-dashboard' },
   { name: 'Products', href: '/products', icon: 'lucide:package' },
   { name: 'Categories', href: '/categories', icon: 'lucide:folder-tree' },
-  { name: 'Suppliers', href: '/suppliers', icon: 'lucide:truck' },
+  { name: 'Suppliers', href: '/suppliers', icon: 'lucide:factory' },
   { name: 'Customers', href: '/customers', icon: 'lucide:users' },
   { name: 'Orders', href: '/orders', icon: 'lucide:shopping-cart' },
   { name: 'Invoices', href: '/invoices', icon: 'lucide:receipt' },
   { name: 'Movements', href: '/movements', icon: 'lucide:arrow-left-right' },
+  { name: 'Delivery Partner', href: '/delivery', icon: 'lucide:truck' },
 ];
 
 const secondaryNavigation = computed(() => {

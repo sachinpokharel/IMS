@@ -14,9 +14,9 @@ const form = reactive({
   email: '',
   phone: '',
   address: '',
-  city: '',
-  postalCode: '',
-  country: 'France',
+  city: 'Kathmandu',
+  postalCode: '44600',
+  country: 'Nepal',
   notes: '',
 });
 
@@ -43,7 +43,7 @@ function openEditModal(supplier: Supplier) {
     address: supplier.address || '',
     city: supplier.city || '',
     postalCode: supplier.postalCode || '',
-    country: supplier.country || 'France',
+    country: supplier.country || 'Nepal',
     notes: supplier.notes || '',
   });
   isModalOpen.value = true;
@@ -57,7 +57,7 @@ function resetForm() {
     address: '',
     city: '',
     postalCode: '',
-    country: 'France',
+    country: 'Nepal',
     notes: '',
   });
 }
