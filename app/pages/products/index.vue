@@ -74,6 +74,7 @@ const form = reactive({
   stockMin: 0,
   unit: 'unit',
   supplierId: '',
+  isActive: true,
   options: [] as VariantOption[],
   variants: [] as ProductVariant[],
 });
@@ -87,6 +88,23 @@ watch([() => form.costPrice, () => form.marginPercent], ([cost, margin]) => {
     form.sellingPrice = Number((cost * (1 + margin / 100)).toFixed(2));
   }
 });
+
+watch(
+  () => form.variants,
+  (variants) => {
+    if (hasVariants.value && variants.length > 0) {
+      form.stockQuantity = variants.reduce(
+        (sum, v) => sum + (v.stockQuantity || 0),
+        0
+      );
+      form.stockMin = variants.reduce(
+        (sum, v) => sum + (v.stockMin || 0),
+        0
+      );
+    }
+  },
+  { deep: true }
+);
 
 function openCreateModal() {
   editingProduct.value = null;
@@ -113,6 +131,7 @@ function openEditModal(product: Product & { variants?: ProductVariant[] }) {
     stockMin: product.stockMin || 0,
     unit: product.unit || 'unit',
     supplierId: product.supplierId || '',
+    isActive: product.isActive ?? true,
   });
 
   if (
@@ -163,6 +182,7 @@ function resetForm() {
     supplierId: '',
     options: [],
     variants: [],
+    isActive: true,
   });
 }
 
@@ -515,6 +535,11 @@ function getSupplierName(supplierId: string | null | undefined) {
                 Price
               </th>
               <th
+                class="h-9 px-4 text-xs font-semibold uppercase tracking-wide text-gray-500"
+              >
+                Status
+              </th>
+              <th
                 class="h-9 px-4 text-xs font-semibold uppercase tracking-wide text-gray-500 w-20"
               ></th>
             </tr>
@@ -597,7 +622,7 @@ function getSupplierName(supplierId: string | null | undefined) {
                     </div>
                     <div class="min-w-0">
                       <div class="flex items-center gap-2">
-                        <p class="truncate text-sm font-medium text-gray-900">
+                        <p class="truncate text-sm font-medium text-gray-900" :class="{ 'text-gray-400 line-through': !item.isActive }">
                           {{ item.name }}
                         </p>
                         <span
@@ -673,6 +698,20 @@ function getSupplierName(supplierId: string | null | undefined) {
                     >{{ item.sellingPrice?.toFixed(2) }}
                     {{ currencySymbol }}</span
                   >
+                </td>
+
+                <!-- Status -->
+                <td class="h-10 px-4 py-2">
+                  <span
+                    :class="[
+                      'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium border',
+                      item.isActive
+                        ? 'bg-green-50 text-green-700 border-green-100'
+                        : 'bg-gray-100 text-gray-600 border-gray-200'
+                    ]"
+                  >
+                    {{ item.isActive ? 'Active' : 'Inactive' }}
+                  </span>
                 </td>
 
                 <!-- Actions -->
@@ -1043,6 +1082,26 @@ function getSupplierName(supplierId: string | null | undefined) {
                 </select>
               </div>
             </div>
+
+            <div class="col-span-12">
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+              <div class="flex items-center gap-3 h-9 px-1">
+                <button
+                  type="button"
+                  class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                  :class="form.isActive ? 'bg-green-600' : 'bg-gray-200'"
+                  @click="form.isActive = !form.isActive"
+                >
+                  <span
+                    class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    :class="form.isActive ? 'translate-x-4' : 'translate-x-0'"
+                  />
+                </button>
+                <span class="text-xs font-medium" :class="form.isActive ? 'text-green-700' : 'text-gray-500'">
+                  {{ form.isActive ? 'Active' : 'Inactive' }} (Inactive products can be hidden from sales)
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1218,7 +1277,7 @@ function getSupplierName(supplierId: string | null | undefined) {
           </div>
         </div>
 
-        <div v-if="!hasVariants">
+        <div>
           <h3
             class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-3 border-b border-gray-100 pb-2"
           >
@@ -1285,7 +1344,7 @@ function getSupplierName(supplierId: string | null | undefined) {
           </div>
         </div>
 
-        <div v-if="!hasVariants">
+        <div>
           <h3
             class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-3 border-b border-gray-100 pb-2"
           >

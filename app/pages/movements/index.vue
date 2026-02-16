@@ -31,6 +31,8 @@ const filters = reactive({
   productId: '',
 });
 
+const activeProducts = computed(() => (products.value || []).filter(p => p.isActive));
+
 const filteredMovements = computed(() => {
   if (!movements.value) return [];
 
@@ -392,7 +394,7 @@ function formatDate(date: Date | string) {
           <select v-model="form.productId" class="input" required>
             <option value="">Select product</option>
             <option
-              v-for="product in products"
+              v-for="product in activeProducts"
               :key="product.id"
               :value="product.id"
             >

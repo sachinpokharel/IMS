@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     stockMax: body.stockMax || null,
     unit: body.unit || 'unit',
     supplierId: body.supplierId || null,
-    isActive: true,
+    isActive: body.isActive ?? true,
     options: body.options || null,
   });
 

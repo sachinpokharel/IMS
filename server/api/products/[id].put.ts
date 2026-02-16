@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
       unit: body.unit || 'unit',
       supplierId: body.supplierId || null,
       options: body.options || null,
+      isActive: body.isActive ?? true,
       updatedAt: new Date(),
     })
     .where(eq(tables.products.id, id));

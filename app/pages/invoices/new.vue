@@ -67,6 +67,8 @@ const filteredCustomers = computed(() => {
   });
 });
 
+const activeProducts = computed(() => products.value.filter(p => p.isActive));
+
 function selectCustomer(customerId: string) {
   form.customerId = customerId;
   customerSearchQuery.value = '';
@@ -532,7 +534,7 @@ async function handleSubmit() {
                   class="w-full rounded-md border border-gray-300 px-3 py-2.5 focus:outline-none focus:border-blue-500\"
                 >
                   <option value="">-- Select Product --</option>
-                  <option v-for="product in products" :key="product.id" :value="product.id" :disabled="isDuplicateProduct(product.id, '', index)">
+                  <option v-for="product in activeProducts" :key="product.id" :value="product.id" :disabled="isDuplicateProduct(product.id, '', index)">
                     {{ product.name }} ({{ product.sku }}){{ isDuplicateProduct(product.id, '', index) ? ' - Already added' : '' }}
                   </option>
                 </select>
